@@ -1,10 +1,20 @@
 'use strict';
-/* global $ */
+/* global $, api */
 
-const apiModule = (function(){
-  const baseURL = 'https://thinkful-list-api.herokuapp.com/irem/items';
-  function getItems(){ 
-    return Promise.resolve('A successful response!');
-  }
-  return getItems();
+const api = (function (){
+  const BASE_URL = 'https://thinkful-list-api.herokuapp.com/irem';
+
+  const getItems = function() { 
+    return fetch(`${BASE_URL}/items`);
+    
+    
+    
+    //Promise.resolve('A successful response!');
+  };
+
+  return {
+    getItems: getItems
+  };
 }());
+
+
