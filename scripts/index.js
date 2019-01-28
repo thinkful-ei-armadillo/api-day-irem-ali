@@ -3,18 +3,31 @@
 
 $(document).ready(function() {
   shoppingList.bindEventListeners();
-  shoppingList.render();
+  api.getItems()
+    .then(items => items.forEach(item => store.addItem(item)))
+    .then(()=> {
+      console.log(store.items);
+      const item = store.items[0];
+      console.log('current name: ' + item.name);
+      // store.findAndUpdate(item.id, { name: 'foobar' });
+      // console.log('new name: ' + item.name);
+      shoppingList.render();
+    });
+  
+  
 });
 
-api.getItems()
-  .then((items) => {
-    const item = items[0];
-    return api.updateItem(item.id, { name: 'foobar' });
-  })
-  .then(() => {
-    // we don't care about the response body here so we don't need to run res.json()
-     console.log('updated!');
-  });
+
+
+// api.getItems()
+//   .then((items) => {
+//     const item = items[0];
+//     return api.updateItem(item.id, { name: 'foobar' });
+//   })
+//   .then(() => {
+//     // we don't care about the response body here so we don't need to run res.json()
+//     console.log('updated!');
+//   });
 
 
 

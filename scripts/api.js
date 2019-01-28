@@ -12,7 +12,7 @@ const listFetchApi = function(...args) {
     .then(data => {
       if (error) throw new Error(data.message);
       return data;
-    })
+    });
 };
 
 const api = (function (){
@@ -25,40 +25,38 @@ const api = (function (){
     //Promise.resolve('A successful response!');
   };
 
-  const createItem = function(itemName){
-    let newItem = JSON.stringify({
-      name: itemName
-    });
+  const createItem = function(name){
     return listFetchApi(`${BASE_URL}/items`, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'}),
-      body: newItem
+      body: JSON.stringify(name)
     });
   };
 
-  const updateItem = function(id, updateData) {
+  // const updateItem = function(id, updateData) {
 
-    return listFetchApi(`${BASE_URL}/items/${id}`, {
-    method: 'PATCH',
-    headers: new Headers({
-      'Content-Type': 'application/json'}),
-      body: JSON.stringify(updateData)
-    });
+  //   return listFetchApi(`${BASE_URL}/items/${id}`, {
+  //   method: 'PATCH',
+  //   headers: new Headers({
+  //     'Content-Type': 'application/json'}),
+  //     body: JSON.stringify(updateData)
+  //   });
+  // };
+
+  const findAndUpdate = function(id, newData) {
+    const itemToFind = listFetchApi(`${BASE_URL}/items/${id}`);
+    console.log(itemToFind);
+    Object.assign(itemToFind, newData);
   };
-
-  // const findAndUpdate = function(id, newData) {
-  //   const itemToFind = listFetchApi(`${BASE_URL}/items/${id}`);
-  //   Object.assign()
-  // }
   
 
 
   return {
     getItems: getItems,
     createItem: createItem,
-    updateItem: updateItem,
-    //findAndUpdate: findAndUpdate
+    // updateItem: updateItem,
+    findAndUpdate: findAndUpdate
   };
 }());
 
