@@ -6,6 +6,20 @@ $(document).ready(function() {
   shoppingList.render();
 });
 
+api.getItems()
+  .then((items) => {
+    const item = items[0];
+    return api.updateItem(item.id, { name: 'foobar' });
+  })
+  .then(() => {
+    // we don't care about the response body here so we don't need to run res.json()
+     console.log('updated!');
+  });
+
+
+
+
+
 // api.getItems()
 //   .then(res => res.json())
 //   .then((items) => {
