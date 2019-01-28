@@ -1,6 +1,7 @@
 /* global Item */
 
 // eslint-disable-next-line no-unused-vars
+'use strict';
 const store = (function(){
   const addItem = function(item) {
     this.items.push(item);
