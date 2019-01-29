@@ -10,7 +10,7 @@ const listFetchApi = function(...args) {
       return res.json();
     })
     .then(data => {
-      if (error) throw new Error(data.message);
+      if (error) throw new Error(data);
       return data;
     });
 };
@@ -26,23 +26,26 @@ const api = (function (){
   };
 
   const createItem = function(name){
+    let newItem ={
+      name: name
+    };
     return listFetchApi(`${BASE_URL}/items`, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'}),
-      body: JSON.stringify(name)
+      body: JSON.stringify(newItem)
     });
   };
 
-  // const updateItem = function(id, updateData) {
+  const updateItem = function(id, updateData) {
 
-  //   return listFetchApi(`${BASE_URL}/items/${id}`, {
-  //   method: 'PATCH',
-  //   headers: new Headers({
-  //     'Content-Type': 'application/json'}),
-  //     body: JSON.stringify(updateData)
-  //   });
-  // };
+    return listFetchApi(`${BASE_URL}/items/${id}`, {
+      method: 'PATCH',
+      headers: new Headers({
+        'Content-Type': 'application/json'}),
+      body: JSON.stringify(updateData)
+    });
+  };
 
   const findAndUpdate = function(id, newData) {
     const itemToFind = listFetchApi(`${BASE_URL}/items/${id}`);
@@ -55,7 +58,7 @@ const api = (function (){
   return {
     getItems: getItems,
     createItem: createItem,
-    // updateItem: updateItem,
+    updateItem: updateItem,
     findAndUpdate: findAndUpdate
   };
 }());

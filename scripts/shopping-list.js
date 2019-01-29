@@ -111,9 +111,14 @@ const shoppingList = (function(){
     $('.js-shopping-list').on('submit', '.js-edit-item', event => {
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
+      const item = store.findById(id);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      store.findAndUpdateName(id, itemName);
-      store.setItemIsEditing(id, false);
+      console.log(itemName);
+      api.updateItem(item.id, {name: itemName});
+      // api.updateItem(item.id, { name: 'foobar' });
+      console.log(api.updateItem(id, {name: itemName}));
+      store.findAndUpdate(id, itemName);
+      // store.setItemIsEditing(id, false);
       render();
     });
   }
